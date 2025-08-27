@@ -28,14 +28,14 @@ func Convert(input string) (string, error) {
 	if isMorse {
 		result := morse.ToText(input)
 		if strings.TrimSpace(result) == "" {
-			return "", errors.New("Ошибка перекодирования из Морзе в Текст")
+			return input, nil
 		}
 		return result, nil
 	}
 
 	result := morse.ToMorse(input)
 	if strings.TrimSpace(result) == "" {
-		return "", errors.New("Ошибка перекодирования из Текста в Морзе")
+		return input, nil
 	}
 	return result, nil
 }
