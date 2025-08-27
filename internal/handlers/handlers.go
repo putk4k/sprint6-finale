@@ -18,14 +18,19 @@ func HandlerRoot(w http.ResponseWriter, r *http.Request) {
 
 func HandlerUpload(w http.ResponseWriter, r *http.Request) {
 
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, "Ошибка парсинга формы", http.StatusInternalServerError)
+	if r.Method != "POST" {
+		http.Error(w, "Метод не поддерживается", http.StatusInternalServerError)
 		return
 	}
 
-	file, header, err := r.FormFile("file")
+	if err := r.ParseMultipartForm(10 << 20); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	file, header, err := r.FormFile("myFile")
 	if err != nil {
-		http.Error(w, "Ошибка получения файла", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -33,7 +38,7 @@ func HandlerUpload(w http.ResponseWriter, r *http.Request) {
 
 	data, err := io.ReadAll(file)
 	if err != nil {
-		http.Error(w, "Ошибка чтения файла", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
