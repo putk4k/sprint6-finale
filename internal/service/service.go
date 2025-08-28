@@ -33,7 +33,7 @@ func Convert(input string) (string, error) {
 		return result, nil
 	}
 	for _, ch := range input {
-		if _, ok := morse.DefaultMorse[unicode.ToUpper(ch)]; !ok {
+		if _, ok := morse.DefaultMorse[ch]; !ok {
 			return input, nil
 		}
 	}
