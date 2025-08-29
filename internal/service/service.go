@@ -30,7 +30,7 @@ func Convert(input string) (string, error) {
 		if strings.TrimSpace(result) == "" {
 			return "", errors.New("Ошибка конвертации из Морзе в Текст")
 		}
-		return result, nil
+		return input + "\n" + result, nil
 	}
 	for _, ch := range input {
 		if _, ok := morse.DefaultMorse[unicode.ToUpper(ch)]; !ok {
@@ -41,5 +41,5 @@ func Convert(input string) (string, error) {
 	if strings.TrimSpace(result) == "" {
 		return "", errors.New("Ошибка конвертации из Текста в Морзе")
 	}
-	return result, nil
+	return input + "\n" + result, nil
 }
